@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-using System.Threading;
 
 public class PlateGetter : MonoBehaviour
 {
@@ -14,11 +13,15 @@ public class PlateGetter : MonoBehaviour
     public GameObject inputBox;
     public string input;
     public GameObject Panel;
-    public string a;
+    InputField Report;
+    public string Report2;
+
 
     void Start()
     {
         outputBox = GameObject.Find("OutputBox").GetComponent<InputField>();
+        Report = GameObject.Find("Report").GetComponent<InputField>();
+        
     }
 
     public void OpenPanel()
@@ -47,16 +50,29 @@ public class PlateGetter : MonoBehaviour
         using(UnityWebRequest request = UnityWebRequest.Get(uri))
         {
             yield return request.SendWebRequest();
-                if( request.isNetworkError|| request.isHttpError)
+            Report.text = request.downloadHandler.text;
+            Report2 = request.error;
+
+                if (Report2?.Length > 0)
                 {   
                     outputBox.text = request.error;
-                    outputBox.text = "TEST";
+                    plate = string.Empty;
+                    GetInput();
                 }
+
+                else if (Report.text == "null")
+                {   
+                    outputBox.text = request.error;
+                    plate = string.Empty;
+                    GetInput();
+                }
+
                 else
                 {   
-                
-                   outputBox.text = request.downloadHandler.text;
-                   outputBox.text = "PLEASE WORK PLZ";
+                    outputBox.text = request.downloadHandler.text;
+                    OpenPanel();
+                    plate = string.Empty;
+                    GetInput();
                 }
             
                 
