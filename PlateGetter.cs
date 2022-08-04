@@ -15,12 +15,13 @@ public class PlateGetter : MonoBehaviour
     public GameObject Panel;
     InputField Report;
     public string Report2;
+    public GameObject Panel1;
 
 
     void Start()
     {
-        outputBox = GameObject.Find("OutputBox").GetComponent<InputField>();
-        Report = GameObject.Find("Report").GetComponent<InputField>();
+        outputBox = Panel1.transform.Find("OutputBox").GetComponent<InputField>();
+        Report = Panel1.transform.Find("Report").GetComponent<InputField>();
         
     }
 
