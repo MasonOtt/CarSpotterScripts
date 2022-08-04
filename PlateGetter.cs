@@ -21,7 +21,7 @@ public class PlateGetter : MonoBehaviour
     void Start()
     {
         outputBox = Panel1.transform.Find("OutputBox").GetComponent<InputField>();
-        Report = Panel1.transform.Find("Report").GetComponent<InputField>();
+        Report = transform.Find("Report").GetComponent<InputField>();
         
     }
 
@@ -57,23 +57,20 @@ public class PlateGetter : MonoBehaviour
                 if (Report2?.Length > 0)
                 {   
                     outputBox.text = request.error;
-                    plate = string.Empty;
-                    GetInput();
+                    
                 }
 
                 else if (Report.text == "null")
                 {   
                     outputBox.text = request.error;
-                    plate = string.Empty;
-                    GetInput();
+                    
                 }
 
                 else
                 {   
-                    outputBox.text = request.downloadHandler.text;
                     OpenPanel();
-                    plate = string.Empty;
-                    GetInput();
+                    outputBox.text = request.downloadHandler.text;
+                    
                 }
             
                 
