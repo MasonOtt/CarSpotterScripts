@@ -9,19 +9,25 @@ public class PlateGetter : MonoBehaviour
     private const string key = "9B7E4A2F1F09C028BA2DF9B1B4F3C9E1A3F3F718";
     public string url = "https://test.carjam.co.nz/a/vehicle:abcd?&key=";
     public string plate;
-    InputField outputBox;
+    InputField rawOutputBox;
     public GameObject inputBox;
     public string input;
     public GameObject Panel;
     InputField Report;
     public string Report2;
     public GameObject Panel1;
+    InputField outputText;
+    public string text;
+    public GameObject Panel2;
+    InputField errorOutputBox;
 
 
     void Start()
     {
-        outputBox = Panel1.transform.Find("OutputBox").GetComponent<InputField>();
+        rawOutputBox = Panel1.transform.Find("RawOutputBox").GetComponent<InputField>();
         Report = transform.Find("Report").GetComponent<InputField>();
+        outputText = Panel1.transform.Find("OutputText").GetComponent<InputField>();
+        errorOutputBox = Panel2.transform.Find("ErrorOutputBox").GetComponent<InputField>();
         
     }
 
@@ -32,6 +38,16 @@ public class PlateGetter : MonoBehaviour
             bool isActive = Panel.activeSelf;
 
             Panel.SetActive(!isActive);
+        }
+    }
+    
+    public void OpenPanel2()
+    {
+        if (Panel2 != null)
+        {
+            bool isActive = Panel2.activeSelf;
+
+            Panel2.SetActive(!isActive);
         }
     }
 
@@ -45,7 +61,7 @@ public class PlateGetter : MonoBehaviour
 
     IEnumerator GetData_Coroutine()
     {
-        outputBox.text = "Loading...";
+        rawOutputBox.text = "Loading...";
         GetInput();
         string uri = (url + key + "&plate=" + plate);
         using(UnityWebRequest request = UnityWebRequest.Get(uri))
@@ -56,20 +72,26 @@ public class PlateGetter : MonoBehaviour
 
                 if (Report2?.Length > 0)
                 {   
-                    outputBox.text = request.error;
+                    OpenPanel2();
+                    errorOutputBox.text = "Sorry that number plate could not be found";
                     
                 }
 
                 else if (Report.text == "null")
                 {   
-                    outputBox.text = request.error;
+                    OpenPanel2();
+                    errorOutputBox.text = "Sorry that number plate could not be found";
                     
                 }
 
                 else
                 {   
+                    text = request.downloadHandler.text;
+                
+
                     OpenPanel();
-                    outputBox.text = request.downloadHandler.text;
+                    rawOutputBox.text = request.downloadHandler.text;
+                    
                     
                 }
             
