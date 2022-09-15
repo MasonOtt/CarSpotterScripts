@@ -13,7 +13,7 @@ public class PlateGetter : MonoBehaviour
     public string url = "https://test.carjam.co.nz/a/vehicle:abcd?&key=";
     //string of prefix of the api url
     public GameObject inputBox;
-    //public gameobject used to get input user input from UNity and convert it into string
+    //public gameobject used to get input user input from Unity and convert it into string
     public string input;
     //string used for the users number plat input
      public string plate;
