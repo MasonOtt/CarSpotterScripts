@@ -106,63 +106,57 @@ public class PlateGetter : MonoBehaviour
     string api_call = (url + key + "&plate=" + plate);
     //adds to api url prefix to the API key plus '&plate' plus the users number plate input to a string
     using(UnityWebRequest request = UnityWebRequest.Get(api_call))
-    // calls to the api for the api_call string
+    //calls to the api for the api_call string
         {
         yield return request.SendWebRequest();
+        //return the call request
         Thread.Sleep(750);
+        //wait 750 miliseconds
         report.text = request.downloadHandler.text;
+        //report inputfield equals the api output
         report2 = request.error;
-
+        //report2 string equals the api call error
         if (report2?.Length > 0)
+        //if report2s length is less than 0
         {   
             OpenPanel2();
+            //opens the error panel in Unity
             error_outputBox.text = "Sorry that number plate could not be found";
+            //displaces text saying ...
                     
         }
 
         else if (report.text == "null")
+        //if the api ouput is equal to 'null'
         {   
                 OpenPanel2();
+                //open error panel in Unity
                 error_outputBox.text = "Sorry that number plate could not be found";
+                //displaces text saying ...
                     
         }
 
         else
+        // if else
             {   
             api_output = request.downloadHandler.text;
+            //api_output equal to api output
             OpenPanel();
-                   
-            //Dictionary<string, string> CarDetails = new Dictionary<string, string>();
-            //CarDetails = text.Split(',');
-            //foreach(KeyValuePair<string, string> kvp in CarDetails)
-                    
-            //IDictionary<string, string> numberNames = new Dictionary<string, string>();
-            //numberNames = text.Split(',');
-	        //foreach(KeyValuePair<string, string> kvp in numberNames);
-			//plateText.text = ("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
-		
-		    //foreach(var kvp in cities)
-			//Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
-	
-
-
-            //var result = request.downloadHandler.text                 
-            //.Select(line => line.Split(','))
-            //.Where( split => split[0] != "Id" )
-            //.ToDictionary(split => int.Parse(split[0]), split => new CarDetails(split[1], split[2], split[3], split[4],split[10]));
-
-
+            //open api poutput panel in Unity
             string[] textsplit = api_output.Split(',');
-
+            //create a string called textsplit which is equal to api_output but split at every ','
             plateText.text = textsplit[0];
+            //plateText's text is equal to the first split in textsplit
             yearText.text = textsplit[1];
+            //yearText's text is equal to the second split in textsplit
             makeText.text = textsplit[2];
-           modelText.text = textsplit[3];
+            //makeText's text is equal to the third split in textsplit
+            modelText.text = textsplit[3];
+            //modelText's text is equal to the fourth split in textsplit
             subModelText.text = textsplit[4];
+            //subModelText's text is equal to the fifth split in textsplit
             colourText.text = textsplit[10];
-            //WriteString();
-            //ReadString();
-            //OpenPanel();
+            //colourText's text is equal to the eleventh  split in textsplit
                     
                     
                     
