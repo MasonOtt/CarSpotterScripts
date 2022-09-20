@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.IO;
 using UnityEditor;
+using System;
 public class PlateGetter : MonoBehaviour
 {
     private const string key = "9B7E4A2F1F09C028BA2DF9B1B4F3C9E1A3F3F718";
@@ -44,6 +45,12 @@ public class PlateGetter : MonoBehaviour
     //inputfield to displace car submodel from api output
     InputField colourText;
     //inputfield to displace car colour from api output
+    InputField carsSpotted;
+    //input field to display cars spotted
+    public int cars_entered;
+    //record how many cars have been succefully found
+    public GameObject Unique_Cars_Button;
+    //game objected used to link the Unique_Cars_Button to the code
 
     void Start()
     {
@@ -63,6 +70,8 @@ public class PlateGetter : MonoBehaviour
         // links the car submodel input field to the input box in Unity
         colourText = panel1.transform.Find("ColourText").GetComponent<InputField>();
         // links the car colour input field to the input box in Unity
+        carsSpotted = transform.Find("Unique_Cars_Output").GetComponent<InputField>();
+        // links the unique
     }
 
     public void OpenPanel()
@@ -147,19 +156,22 @@ public class PlateGetter : MonoBehaviour
             //create a string called textsplit which is equal to api_output but split at every ','
             plateText.text = textsplit[0];
             //plateText's text is equal to the first split in textsplit
-            yearText.text = textsplit[1];
+            yearText.text = textsplit[2];
             //yearText's text is equal to the second split in textsplit
-            makeText.text = textsplit[2];
+            makeText.text = textsplit[3];
             //makeText's text is equal to the third split in textsplit
-            modelText.text = textsplit[3];
+            modelText.text = textsplit[4];
             //modelText's text is equal to the fourth split in textsplit
-            subModelText.text = textsplit[4];
+            subModelText.text = textsplit[5];
             //subModelText's text is equal to the fifth split in textsplit
             colourText.text = textsplit[10];
             //colourText's text is equal to the eleventh  split in textsplit
-                    
-                    
-                    
+            cars_entered += 1;
+            //adds one to the total of cars seen
+            string unique_cars = "Unique Cars Spotted: ";
+            // creates a string that is the prefix of the carsSpotted out text 
+            carsSpotted.text = unique_cars + cars_entered.ToString();        
+            // displays the unique cars string and the int of cars entered to the cars spotted text in unity
             }
         }
     }
